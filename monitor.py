@@ -10,9 +10,9 @@ from pynput import keyboard
 from pynput import mouse
 import win32gui
 
-item = []
-currentApp = ""
-appName = "SecureCRT"
+item = []  # 输入的字符列表
+currentApp = ""  # 获取当前键盘输入的程序
+appName = "SecureCRT"  # 需要监听的程序名
 # appName = "Xshell"
 
 
@@ -23,14 +23,14 @@ def on_press(key):  # 键盘按下事件
     if appName in currentApp:  # 指定监听的程序
         if key == keyboard.Key.enter:  # 回车事件
             print("触发回车")
-            item = []
+            item = []  # 清空列表
         elif key == keyboard.Key.backspace:  # 删除键
             print("触发删除")
             if len(item) != 0:
-                item = item[:len(item) - 1]
+                item = item[:len(item) - 1]  # 删除最后面一个
         elif key == keyboard.Key.space:  # 空格
             print("触发空格")
-            item.append(" ")
+            item.append(" ")  # 添加空格
         # 组合键ctrl + c
         elif str(key) == r"'\x03'":
             print("触发ctrl + c")
@@ -38,7 +38,7 @@ def on_press(key):  # 键盘按下事件
         else:
             try:
                 item.append(key.char)
-            except AttributeError:
+            except AttributeError:  # 特殊键
                 pass
         return False
 
@@ -55,7 +55,7 @@ def get_vk(key):  # 获取键盘码
 def check(word):  # 校验输入
     rules = ["su -", "su", "sudo"]  # 过滤规则
     for rule in rules:
-        if str(word).strip() == str(rule).strip():
+        if str(word).strip() == str(rule).strip():  # 比对
             return False
     return True
 
@@ -67,8 +67,8 @@ def foucs(x, y, button, pressed):  # 鼠标点击事件
 
 
 def getApp():  # 获取当前键入程序标题名
-    current_windows = win32gui.GetForegroundWindow()
-    title = win32gui.GetWindowText(current_windows)
+    current_windows = win32gui.GetForegroundWindow()  # 获取程序窗口
+    title = win32gui.GetWindowText(current_windows)  # 获取程序标题
     return title
 
 
@@ -87,7 +87,7 @@ def main():  # 主程序
                 if data.vkCode == get_vk(keyboard.Key.enter):  # 回车
                     word = "".join(item)  # 拼接输入字符
                     if not check(word):  # 校验不通过
-                        keyboardListener.suppress_event()  # 抑制键盘事件
+                        keyboardListener.suppress_event()  # 抑制、拦截键盘事件
 
         with keyboard.Listener(on_press=on_press, win32_event_filter=win32_event_filter) as keyboardListener:
             keyboardListener.join()
