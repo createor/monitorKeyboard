@@ -32,3 +32,5 @@ appName = "SecureCRT"  # 程序标题，例如Xshell程序标题含有Xshell字�
 rules = ["su -", "su", "sudo"]  # 过滤规则，根据需要添加即可
 ```
 
+使用
+![image1.png](https://github.com/createor/monitorKeyboard/blob/main/images/image1.png)
