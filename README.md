@@ -1,5 +1,13 @@
 # 监控window键盘键入关键字
 
+文件说明
+
+|--autoStart.bat		（windows设置开启自启动脚本）
+
+|--keyboard			   （图标文件)
+
+|--monitor.py			（主要文件）
+
 版本说明
 
 ```
